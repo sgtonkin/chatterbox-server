@@ -11,8 +11,9 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+var url = require("url");
 
-var requestHandler = function(request, response) {
+exports.handleRequest = function(request, response) {
   // Request and Response come from node's http module.
   //
   // They include information about both the incoming request, such as
@@ -29,30 +30,25 @@ var requestHandler = function(request, response) {
   // console.logs in your code.
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  // The outgoing status.
   var statusCode = 200;
+  var payload;
+  var path = url.parse(request.url).path.slice(1).split("/");
 
-  // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
 
-  // Tell the client we are sending them plain text.
-  //
-  // You will need to change this if you are sending something
-  // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "text/plain";
+  if(path[0] === "api") {
+    if(path[1] === 'messages') {
+      headers['Content-Type'] = "text/plain";
+      statusCode = 200;
+      payload = "NEW MESSAGES";
+    }
+    else {
+      payload = "NOT A VALID URL"
+    }
+  };
 
-  // .writeHead() writes to the request line and headers of the response,
-  // which includes the status and all headers.
   response.writeHead(statusCode, headers);
-
-  // Make sure to always call response.end() - Node may not send
-  // anything back to the client until you do. The string you pass to
-  // response.end() will be the body of the response - i.e. what shows
-  // up in the browser.
-  //
-  // Calling .end "flushes" the response's internal buffer, forcing
-  // node to actually send all the data over to the client.
-  response.end("Hello, World!");
+  response.end(payload);
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
