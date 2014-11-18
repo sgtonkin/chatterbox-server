@@ -28,7 +28,7 @@ EXTRA CREDIT
 browser instead of opening the file.
 
 - Deploy the codes! Publicize your repo using Liberator and get your server running on Microsoft Azure. Congrats, you have your own private
-(but completely public) chat server for you and your friends to use!
+(but completely public) chat server for you and your friends to use! [X]
 
 - Summarize the chain of events between basic-server's `http.createServer(...)` and the function call to `requestListener`.
 
