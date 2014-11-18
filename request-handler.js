@@ -116,7 +116,7 @@ exports.requestHandler = function(request, response) {
 
         if (err) {
           statusCode = 404;
-          console.log(e);
+          console.log(err);
           response.writeHead(statusCode,headers);
           return response.end(JSON.stringify(payload));
         }
