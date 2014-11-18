@@ -7,3 +7,5 @@
 {"username":"anonymous","text":"hi","roomname":"lobby"}
 {"username":"anonymous","text":"sdf","roomname":"lobby"}
 {"username":"anonymous","text":"fef","roomname":"lobby"}
+{"username":"anonymous","text":"agsdfg","roomname":"lobby"}
+{"username":"anonymous","text":"f","roomname":"lobby"}

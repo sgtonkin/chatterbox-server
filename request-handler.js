@@ -113,17 +113,29 @@ exports.requestHandler = function(request, response) {
       console.log("./client" + url.parse(request.url).path);
       keepGoing = false;
       fs.open("./client" + url.parse(request.url).path, 'rs', function(err, fd) {
+
+        if (err) {
+          statusCode = 404;
+          console.log(e);
+          response.writeHead(statusCode,headers);
+          return response.end(JSON.stringify(payload));
+        }
+
         var fileExtensions = url.parse(request.url).path.split(".");
         var payload = fs.readFileSync("./client" + url.parse(request.url).path,"utf8");
+
         console.log('statics');
         statusCode = 200;
         if(fileExtensions[1] === "js") {
           headers['Content-Type'] = "application/javascript";
         } else if(fileExtensions[1] === "css") {
           headers['Content-Type'] = 'text/css';
+        } else if(fileExtensions[1] === "ico") {
+          headers['Content-Type'] = 'image';
         }
         response.writeHead(200, headers);
         return response.end(payload);
+
       });
   };
   if(keepGoing){

@@ -6,6 +6,7 @@ $(function() {
 //TODO: The current 'addFriend' function just adds the class 'friend'
 //to all messages sent by the user
     server: 'http://chatterboxes.cloudapp.net/classes/',
+    // server: 'http://localhost:3000/classes/',
     username: 'anonymous',
     roomname: 'lobby',
     lastMessageId: 0,
