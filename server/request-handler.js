@@ -19,6 +19,7 @@ this file and include it in basic-server.js so that it actually works.
 **************************************************************/
 var url = require("url");
 var fs = require("fs");
+var crypto = require("crypto");
 
 var results = [{
   roomname: 'lobby',
@@ -31,7 +32,9 @@ var indexHtml = "";
 
 fs.open("messages.txt", 'a+', function(err, fd) {
       results = fs.readFileSync("messages.txt","utf8").split('\n');
+      console.log(results)
       results.forEach(function(el,i){
+        if(results[i].length > 1)
         results[i] = JSON.parse(results[i]);
       });
 });
@@ -92,10 +95,13 @@ exports.requestHandler = function(request, response) {
       else if (request.method === 'POST') {
         statusCode = 201;
         request.setEncoding('utf8');
+        var id = crypto.randomBytes(20).toString('hex');
         request.on('readable',function(resp){
           var message = request.read();
-          fs.appendFile("messages.txt",message);
-          results.push(JSON.parse(message));
+          fs.appendFile("messages.txt",message + '\n');
+          var parsed = JSON.parse(message);
+          parsed.objectId = id;
+          results.push(parsed);
           response.writeHead(statusCode, headers);
           payload = {results:results};
           return response.end(JSON.stringify(payload));

@@ -1,1 +1,6 @@
-{"username":"Seb","text":"sebd","roomname":"lobby"}
+{"username":"","text":"asdf","roomname":"lobby"}
+{"username":"","text":"hi","roomname":"lobby"}
+{"username":"anonymous","text":"g","roomname":"lobby"}
+{"username":"anonymous","text":"goodbye","roomname":"lobby"}
+{"username":"anonymous","text":"Hello","roomname":"Lodge"}
+{"username":"anonymous","text":"Goodbye","roomname":"Lodge"}

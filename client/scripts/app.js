@@ -12,9 +12,6 @@ $(function() {
     friends: {},
 
     init: function() {
-      // Get username
-      app.username = window.location.search.substr(10);
-
       // Cache jQuery selectors
       app.$main = $('#main');
       app.$message = $('#message');
@@ -70,6 +67,7 @@ $(function() {
           var displayedRoom = $('.chat span').first().data('roomname');
           app.stopSpinner();
           // Only bother updating the DOM if we have a new message
+          console.log(mostRecentMessage.objectId, app.lastMessageId)
           if (mostRecentMessage.objectId !== app.lastMessageId || app.roomname !== displayedRoom) {
             // Update the UI with the fetched rooms
             app.populateRooms(data.results);
