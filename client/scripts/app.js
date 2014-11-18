@@ -5,7 +5,7 @@ $(function() {
   app = {
 //TODO: The current 'addFriend' function just adds the class 'friend'
 //to all messages sent by the user
-    server: 'https://api.parse.com/1/classes/chatterbox/',
+    server: 'http://127.0.0.1:3000/classes/',
     username: 'anonymous',
     roomname: 'lobby',
     lastMessageId: 0,
@@ -41,7 +41,7 @@ $(function() {
 
       // POST the message to the server
       $.ajax({
-        url: app.server,
+        url: app.server + data.roomname,
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json',
@@ -57,13 +57,11 @@ $(function() {
     },
     fetch: function(animate) {
       $.ajax({
-        url: app.server,
+        url: app.server + 'messages',
         type: 'GET',
         contentType: 'application/json',
-        data: { order: '-createdAt'},
         success: function(data) {
-          console.log('chatterbox: Messages fetched');
-
+          data = JSON.parse(data);
           // Don't bother if we have nothing to work with
           if (!data.results || !data.results.length) { return; }
 
@@ -74,6 +72,7 @@ $(function() {
           // Only bother updating the DOM if we have a new message
           if (mostRecentMessage.objectId !== app.lastMessageId || app.roomname !== displayedRoom) {
             // Update the UI with the fetched rooms
+            console.log('inside')
             app.populateRooms(data.results);
 
             // Update the UI with the fetched messages
@@ -113,8 +112,8 @@ $(function() {
       }
     },
     populateRooms: function(results) {
-      app.$roomSelect.html('<option value="__newRoom">New room...</option><option value="" selected>Lobby</option></select>');
-
+      app.$roomSelect.html('<option value="__newRoom">New room...</option><option value="lobby" selected>lobby</option></select>');
+      console.log(results)
       if (results) {
         var rooms = {};
         results.forEach(function(data) {

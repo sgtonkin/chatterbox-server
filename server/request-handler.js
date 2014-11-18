@@ -1,3 +1,9 @@
+var defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10 // Seconds.
+};
 /*************************************************************
 
 You should implement your request handler function in this file.
@@ -12,7 +18,12 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var url = require("url");
-var results = [];
+var results = [{
+  roomname: 'lobby',
+  text: 'hello',
+  username: 'tester',
+  objectId: 23
+}];
 
 exports.requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -36,7 +47,11 @@ exports.requestHandler = function(request, response) {
   var path = url.parse(request.url).path.slice(1).split("/");
   var headers = defaultCorsHeaders;
   headers['Content-Type'] = "text/plain";
-
+  if(request.method === "OPTIONS") {
+    statusCode = 200;
+    response.writeHead(statusCode,headers);
+    response.end(JSON.stringify(payload));
+  }
   if(path[0] === "classes") {
     if(path[1]) {
       // GET HANDLER
@@ -76,10 +91,4 @@ exports.requestHandler = function(request, response) {
 //
 // Another way to get around this restriction is to serve you chat
 // client from this domain by setting up static file serving.
-var defaultCorsHeaders = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 10 // Seconds.
-};
 
