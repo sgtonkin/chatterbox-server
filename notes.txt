@@ -1,0 +1,41 @@
+notes.txt
+
+BASIC REQUIREMENTS
+
+- Learn how to use Node to start an HTTP server and how to connect to that server with a web browser. (Source code for a bare-bones HTTP server is included in the file `server/basic-server.js`.) [X]
+
+- Learn how to use export and require. Write a proper request handling function in the file `server/request-handler.js`. Use export to make this
+function available, and use require to import the function into `server/basic-server.js` and use it there. [X]
+
+- Make your Node server implement the URLs you used for your chat client (eg `/classes/messages`).
+  /api/messages [X]
+
+- Modify your chat-client code to connect to your Node server instead of connecting to Parse. (http://127.0.0.1:3000/ instead of https://api.parse.com/1/). Start the server and try out the client!
+
+- Make all the Mocha tests pass. To run Mocha tests for your Node server, you must run npm npm install. Run the tests using npm test from the main directory. The tests in server/spec/ServerSpec.js expect the handleRequest function in server/request-handler.js to be defined.
+
+-You'll need to make sure you're handling options requests in your router, and sending back appropriate headers, or else ain't nothing gone work.
+
+
+
+
+
+EXTRA CREDIT
+
+- Make your Node server serve up the html and js files for the chat client page at http://127.0.0.1:3000/. Run the client by visiting that URL in your
+browser instead of opening the file.
+
+- Have the server store the message log in a file so that the messages are saved even after you stop and restart the node server.
+
+- Express.js repackages Node.js' API into a clean and easy to use interface. Refactor your server to use Express and marvel at how much nicer your code looks now.
+
+- Deploy the codes! Publicize your repo using Liberator and get your server running on Microsoft Azure. Congrats, you have your own private
+(but completely public) chat server for you and your friends to use!
+
+- Summarize the chain of events between basic-server's `http.createServer(...)` and the function call to `requestListener`.
+
+- Throughout your expedition, record your notes for later publication as a blog post.
+
+- Start from Node's HTTP module. List/summarize the method calls that happen, skipping over boring steps when possible, and aiming for conceptual completeness and simplicity.
+
+- Things will get increasingly more "low-level" -- closer to bare networking concepts and system calls to non-javascript code. Make a judgement calls about when to skip onwards. Beeline for something complete, but very, very simple, and fill in more details later. Watch out for deep rabbit-holes.

@@ -12,6 +12,7 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var url = require("url");
+var results = [];
 
 exports.handleRequest = function(request, response) {
   // Request and Response come from node's http module.
@@ -30,25 +31,39 @@ exports.handleRequest = function(request, response) {
   // console.logs in your code.
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  var statusCode = 200;
-  var payload;
+  var statusCode = 404;
+  var payload = {};
   var path = url.parse(request.url).path.slice(1).split("/");
 
   var headers = defaultCorsHeaders;
-
-  if(path[0] === "api") {
-    if(path[1] === 'messages') {
-      headers['Content-Type'] = "text/plain";
-      statusCode = 200;
-      payload = "NEW MESSAGES";
-    }
-    else {
-      payload = "NOT A VALID URL"
+  headers['Content-Type'] = "text/plain";
+  if(path[0] === "classes") {
+    if(path[1] === "messages") {
+      // GET HANDLER
+      if(request.method === 'GET') {
+        headers['Content-Type'] = "text/plain";
+        statusCode = 200;
+        payload = {results:results};
+        response.writeHead(statusCode, headers);
+        response.end(JSON.stringify(payload));
+      }
+      // POST HANDLER
+      else if (request.method === 'POST') {
+        statusCode = 201;
+        request.setEncoding('utf8');
+        request.on('readable',function(resp){
+          results.push(JSON.parse(request.read()));
+          response.writeHead(statusCode, headers);
+          payload = {results:results};
+          response.end(JSON.stringify(payload));
+        })
+      }
     }
   };
 
-  response.writeHead(statusCode, headers);
-  response.end(payload);
+  response.writeHead(statusCode,headers);
+  response.end(JSON.stringify(payload));
+
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
