@@ -39,8 +39,8 @@ fs.open("messages.txt", 'a+', function(err, fd) {
       });
 });
 
-fs.open("../client/index.html", 'rs', function(err, fd) {
-      indexHtml = fs.readFileSync("../client/index.html","utf8");
+fs.open("./client/index.html", 'rs', function(err, fd) {
+      indexHtml = fs.readFileSync("./client/index.html","utf8");
 });
 
 exports.requestHandler = function(request, response) {
@@ -110,11 +110,11 @@ exports.requestHandler = function(request, response) {
     }
 
   }else{
-      console.log("../client" + url.parse(request.url).path);
+      console.log("./client" + url.parse(request.url).path);
       keepGoing = false;
-      fs.open("../client" + url.parse(request.url).path, 'rs', function(err, fd) {
+      fs.open("./client" + url.parse(request.url).path, 'rs', function(err, fd) {
         var fileExtensions = url.parse(request.url).path.split(".");
-        var payload = fs.readFileSync("../client" + url.parse(request.url).path,"utf8");
+        var payload = fs.readFileSync("./client" + url.parse(request.url).path,"utf8");
         console.log('statics');
         statusCode = 200;
         if(fileExtensions[1] === "js") {
