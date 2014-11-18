@@ -22,20 +22,18 @@ function available, and use require to import the function into `server/basic-se
 
 EXTRA CREDIT
 
+- Have the server store the message log in a file so that the messages are saved even after you stop and restart the node server. [X]
+
 - Make your Node server serve up the html and js files for the chat client page at http://127.0.0.1:3000/. Run the client by visiting that URL in your
 browser instead of opening the file.
-
-- Have the server store the message log in a file so that the messages are saved even after you stop and restart the node server.
-
-- Express.js repackages Node.js' API into a clean and easy to use interface. Refactor your server to use Express and marvel at how much nicer your code looks now.
 
 - Deploy the codes! Publicize your repo using Liberator and get your server running on Microsoft Azure. Congrats, you have your own private
 (but completely public) chat server for you and your friends to use!
 
 - Summarize the chain of events between basic-server's `http.createServer(...)` and the function call to `requestListener`.
 
-- Throughout your expedition, record your notes for later publication as a blog post.
+- Express.js repackages Node.js' API into a clean and easy to use interface. Refactor your server to use Express and marvel at how much nicer your code looks now.
 
 - Start from Node's HTTP module. List/summarize the method calls that happen, skipping over boring steps when possible, and aiming for conceptual completeness and simplicity.
 
-- Things will get increasingly more "low-level" -- closer to bare networking concepts and system calls to non-javascript code. Make a judgement calls about when to skip onwards. Beeline for something complete, but very, very simple, and fill in more details later. Watch out for deep rabbit-holes.
+- Throughout your expedition, record your notes for later publication as a blog post.

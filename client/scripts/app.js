@@ -72,7 +72,6 @@ $(function() {
           // Only bother updating the DOM if we have a new message
           if (mostRecentMessage.objectId !== app.lastMessageId || app.roomname !== displayedRoom) {
             // Update the UI with the fetched rooms
-            console.log('inside')
             app.populateRooms(data.results);
 
             // Update the UI with the fetched messages

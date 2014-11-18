@@ -18,12 +18,27 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var url = require("url");
+var fs = require("fs");
+
 var results = [{
   roomname: 'lobby',
   text: 'hello',
   username: 'tester',
   objectId: 23
 }];
+
+var indexHtml = "";
+
+fs.open("messages.txt", 'a+', function(err, fd) {
+      results = fs.readFileSync("messages.txt","utf8").split('\n');
+      results.forEach(function(el,i){
+        results[i] = JSON.parse(results[i]);
+      });
+});
+
+fs.open("../client/index.html", 'rs', function(err, fd) {
+      indexHtml = fs.readFileSync("../client/index.html","utf8");
+});
 
 exports.requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -42,16 +57,27 @@ exports.requestHandler = function(request, response) {
   // console.logs in your code.
   console.log("Serving request type " + request.method + " for url " + request.url);
 
+  // DEFINE DEFAULTS
   var statusCode = 404;
   var payload = {};
   var path = url.parse(request.url).path.slice(1).split("/");
   var headers = defaultCorsHeaders;
   headers['Content-Type'] = "text/plain";
+  var keepGoing = true;
   if(request.method === "OPTIONS") {
     statusCode = 200;
     response.writeHead(statusCode,headers);
-    response.end(JSON.stringify(payload));
+    return response.end(JSON.stringify(payload));
   }
+
+  if(path[0] === "") {
+    headers['Content-Type'] = "text/html";
+    statusCode = 200;
+    payload = indexHtml;
+    response.writeHead(statusCode, headers);
+    return response.end(payload);
+  }
+
   if(path[0] === "classes") {
     if(path[1]) {
       // GET HANDLER
@@ -60,25 +86,44 @@ exports.requestHandler = function(request, response) {
         statusCode = 200;
         payload = {results:results};
         response.writeHead(statusCode, headers);
-        response.end(JSON.stringify(payload));
+        return response.end(JSON.stringify(payload));
       }
       // POST HANDLER
       else if (request.method === 'POST') {
         statusCode = 201;
         request.setEncoding('utf8');
         request.on('readable',function(resp){
-          results.push(JSON.parse(request.read()));
+          var message = request.read();
+          fs.appendFile("messages.txt",message);
+          results.push(JSON.parse(message));
           response.writeHead(statusCode, headers);
           payload = {results:results};
-          response.end(JSON.stringify(payload));
+          return response.end(JSON.stringify(payload));
         })
       }
     }
 
+  }else{
+      console.log("../client" + url.parse(request.url).path);
+      keepGoing = false;
+      fs.open("../client" + url.parse(request.url).path, 'rs', function(err, fd) {
+        var fileExtensions = url.parse(request.url).path.split(".");
+        var payload = fs.readFileSync("../client" + url.parse(request.url).path,"utf8");
+        console.log('statics');
+        statusCode = 200;
+        if(fileExtensions[1] === "js") {
+          headers['Content-Type'] = "application/javascript";
+        } else if(fileExtensions[1] === "css") {
+          headers['Content-Type'] = 'text/css';
+        }
+        response.writeHead(200, headers);
+        return response.end(payload);
+      });
   };
-
-  response.writeHead(statusCode,headers);
-  response.end(JSON.stringify(payload));
+  if(keepGoing){
+    response.writeHead(statusCode,headers);
+    response.end(JSON.stringify(payload));
+  }
 
 };
 
