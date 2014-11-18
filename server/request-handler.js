@@ -14,7 +14,7 @@ this file and include it in basic-server.js so that it actually works.
 var url = require("url");
 var results = [];
 
-exports.handleRequest = function(request, response) {
+exports.requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
   // They include information about both the incoming request, such as
@@ -34,11 +34,11 @@ exports.handleRequest = function(request, response) {
   var statusCode = 404;
   var payload = {};
   var path = url.parse(request.url).path.slice(1).split("/");
-
   var headers = defaultCorsHeaders;
   headers['Content-Type'] = "text/plain";
+
   if(path[0] === "classes") {
-    if(path[1] === "messages") {
+    if(path[1]) {
       // GET HANDLER
       if(request.method === 'GET') {
         headers['Content-Type'] = "text/plain";
@@ -59,6 +59,7 @@ exports.handleRequest = function(request, response) {
         })
       }
     }
+
   };
 
   response.writeHead(statusCode,headers);
