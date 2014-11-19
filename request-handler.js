@@ -1,10 +1,10 @@
 var url = require("url");
 var fs = require("fs");
 var crypto = require("crypto");
-var results = require("helpers").results;
-var indexHtml = require("helpers").indexHtml;
-var sendResponse = require("helpers").sendResponse;
-var handleStatics = require("helpers").handleStatics;
+var results = require("helpers.js").results;
+var indexHtml = require("helpers.js").indexHtml;
+var sendResponse = require("helpers.js").sendResponse;
+var handleStatics = require("helpers.js").handleStatics;
 var payload;
 
 var actions = {
