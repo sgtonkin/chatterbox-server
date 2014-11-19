@@ -17,15 +17,12 @@ function available, and use require to import the function into `server/basic-se
 -You'll need to make sure you're handling options requests in your router, and sending back appropriate headers, or else ain't nothing gone work.
 
 
-
-
-
 EXTRA CREDIT
 
 - Have the server store the message log in a file so that the messages are saved even after you stop and restart the node server. [X]
 
 - Make your Node server serve up the html and js files for the chat client page at http://127.0.0.1:3000/. Run the client by visiting that URL in your
-browser instead of opening the file.
+browser instead of opening the file. [X]
 
 - Deploy the codes! Publicize your repo using Liberator and get your server running on Microsoft Azure. Congrats, you have your own private
 (but completely public) chat server for you and your friends to use! [X]
@@ -37,3 +34,39 @@ browser instead of opening the file.
 - Start from Node's HTTP module. List/summarize the method calls that happen, skipping over boring steps when possible, and aiming for conceptual completeness and simplicity.
 
 - Throughout your expedition, record your notes for later publication as a blog post.
+
+REFACTOR
+
+- Delete all the comments
+- Create actions object
+- Create utility functions
+- Move utility functions into new file and include in server.js
+
+var sendResponse = function (response, statusCode, contentType, payload) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

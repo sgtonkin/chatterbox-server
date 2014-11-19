@@ -9,3 +9,6 @@
 {"username":"anonymous","text":"fef","roomname":"lobby"}
 {"username":"anonymous","text":"agsdfg","roomname":"lobby"}
 {"username":"anonymous","text":"f","roomname":"lobby"}
+{"username":"anonymous","text":"dsf","roomname":"lobby"}
+{"username":"anonymous","text":"sdffasdfasfsdfdsf","roomname":"lobby"}
+{"username":"anonymous","text":"sdf","roomname":"lobby"}
