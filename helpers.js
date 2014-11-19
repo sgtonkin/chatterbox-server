@@ -10,8 +10,8 @@ var headers = {
 };
 var results = [];
 
-// ENDS RESPONSE FO};
-R ALL TYPES OF REQUESTS
+// ENDS RESPONSE FOR;
+// ALL TYPES OF REQUESTS
   var sendResponse = function (response, statusCode, contentType, payload) {
   var statusCode = statusCode || 200;
   var payload = payload || "{}";
@@ -27,9 +27,9 @@ var handleStatics = function(response, path) {
           console.log('ERROR OPENING FILE', err);
           return sendResponse(response, 404);
         }
-
+        console.log('PATH', path)
         var fileExtensions = path[1].split(".");
-        payload = fs.readFileSync("./client/" + path,"utf8");
+        payload = fs.readFileSync("./client/" + path.join("/"),"utf8");
         var contentType;
 
         if(fileExtensions[1] === "js") {

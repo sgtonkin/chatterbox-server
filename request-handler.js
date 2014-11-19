@@ -15,7 +15,7 @@ var actions = {
       payload = JSON.stringify({results:results});
       return sendResponse(response, 200, "text/plain", payload);
     } else {
-      return handleStatics()
+      return handleStatics(response, path)
     };
   },
   POST: function(request, response, path) {
